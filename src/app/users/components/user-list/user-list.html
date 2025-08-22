@@ -1,0 +1,177 @@
+<div class="user-list-container">
+  <!-- Header with title and create button -->
+  <mat-card class="header-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>people</mat-icon>
+        User Management
+      </mat-card-title>
+      <mat-card-subtitle>
+        Manage your users with ease
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="createUser()"
+        matTooltip="Add new user">
+        <mat-icon>add</mat-icon>
+        Add User
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Search and Filters -->
+  <mat-card class="filters-card">
+    <mat-card-content>
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search users</mat-label>
+          <input 
+            matInput 
+            [formControl]="searchControl"
+            placeholder="Search by name or email..."
+            matTooltip="Type to search users">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="status-filter">
+          <mat-label>Status</mat-label>
+          <mat-select [formControl]="statusFilterControl">
+            <mat-option value="">All Statuses</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="inactive">Inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button 
+          mat-stroked-button 
+          (click)="clearFilters()"
+          matTooltip="Clear all filters">
+          <mat-icon>clear</mat-icon>
+          Clear
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Users Table -->
+  <mat-card class="table-card">
+    <mat-card-content>
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading users...</p>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="error" class="error-container">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="loadUsers()">
+          Retry
+        </button>
+      </div>
+
+      <!-- Users Table -->
+      <div *ngIf="!loading && !error" class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange()">
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let user"> 
+              <span [appHighlight]="searchControl.value || ''">
+                {{ user.name | name }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let user"> 
+              <span [appHighlight]="searchControl.value || ''">
+                {{ user.email }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let user"> 
+              <span class="status-badge" [class]="user.status">
+                {{ user.status | status }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let user"> 
+              <div class="action-buttons">
+                <button 
+                  mat-icon-button 
+                  color="primary" 
+                  (click)="viewUser(user)"
+                  matTooltip="View user details">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button 
+                  mat-icon-button 
+                  color="accent" 
+                  (click)="editUser(user)"
+                  matTooltip="Edit user">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button 
+                  mat-icon-button 
+                  color="warn" 
+                  (click)="deleteUser(user)"
+                  matTooltip="Delete user">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr 
+            mat-row 
+            *matRowDef="let row; columns: displayedColumns;"
+            class="user-row"
+            (click)="viewUser(row)"
+            [class.clickable]="true">
+          </tr>
+        </table>
+
+        <!-- Pagination -->
+        <mat-paginator 
+          [length]="totalItems"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="0"
+          (page)="onPageChange()"
+          showFirstLastButtons>
+        </mat-paginator>
+
+        <!-- No Data Message -->
+        <div *ngIf="dataSource.data.length === 0 && !loading" class="no-data">
+          <mat-icon>inbox</mat-icon>
+          <p>No users found</p>
+          <p *ngIf="searchControl.value || statusFilterControl.value">
+            Try adjusting your search criteria
+          </p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

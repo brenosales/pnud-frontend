@@ -1,0 +1,125 @@
+<div class="user-form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>{{ isEditMode ? 'edit' : 'person_add' }}</mat-icon>
+        {{ isEditMode ? 'Edit User' : 'Create New User' }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ isEditMode ? 'Update user information' : 'Add a new user to the system' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading user data...</p>
+      </div>
+
+      <!-- User Form -->
+      <form *ngIf="!loading" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+        <!-- Name Field -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Full Name</mat-label>
+          <input 
+            matInput 
+            formControlName="name"
+            placeholder="Enter full name"
+            maxlength="50"
+            required>
+          <mat-hint>Enter the user's full name (letters and spaces only)</mat-hint>
+          <mat-error *ngIf="hasError('name')">
+            {{ getErrorMessage('name') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Email Field -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email Address</mat-label>
+          <input 
+            matInput 
+            formControlName="email"
+            type="email"
+            placeholder="Enter email address"
+            maxlength="100"
+            required>
+          <mat-hint>Enter a valid email address</mat-hint>
+          <mat-error *ngIf="hasError('email')">
+            {{ getErrorMessage('email') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Status Field -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" required>
+            <mat-option value="active">
+              <span class="status-option active">
+                <mat-icon>check_circle</mat-icon>
+                Active
+              </span>
+            </mat-option>
+            <mat-option value="inactive">
+              <span class="status-option inactive">
+                <mat-icon>cancel</mat-icon>
+                Inactive
+              </span>
+            </mat-option>
+          </mat-select>
+          <mat-hint>Select the user's current status</mat-hint>
+          <mat-error *ngIf="hasError('status')">
+            {{ getErrorMessage('status') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button 
+            type="button" 
+            mat-stroked-button 
+            (click)="onCancel()"
+            [disabled]="submitting">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+          
+          <button 
+            type="submit" 
+            mat-raised-button 
+            color="primary"
+            [disabled]="userForm.invalid || submitting">
+            <mat-icon *ngIf="!submitting">
+              {{ isEditMode ? 'save' : 'add' }}
+            </mat-icon>
+            <mat-spinner *ngIf="submitting" diameter="20"></mat-spinner>
+            {{ submitting ? 'Saving...' : (isEditMode ? 'Update User' : 'Create User') }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Form Validation Summary -->
+  <mat-card *ngIf="userForm.invalid && userForm.touched" class="validation-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon color="warn">warning</mat-icon>
+        Please fix the following errors:
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul class="validation-errors">
+        <li *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+          <strong>Name:</strong> {{ getErrorMessage('name') }}
+        </li>
+        <li *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          <strong>Email:</strong> {{ getErrorMessage('email') }}
+        </li>
+        <li *ngIf="userForm.get('status')?.invalid && userForm.get('status')?.touched">
+          <strong>Status:</strong> {{ getErrorMessage('status') }}
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
