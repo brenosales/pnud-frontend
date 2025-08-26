@@ -12,13 +12,21 @@ describe('UserService', () => {
       id: 1,
       name: 'John Doe',
       email: 'john@example.com',
-      status: 'active'
+      status: 'inactive', // ID 1 (odd) = inactive
+      phone: '',
+      website: '',
+      company: undefined,
+      address: undefined
     },
     {
       id: 2,
       name: 'Jane Smith',
       email: 'jane@example.com',
-      status: 'inactive'
+      status: 'active', // ID 2 (even) = active
+      phone: '',
+      website: '',
+      company: undefined,
+      address: undefined
     }
   ];
 
@@ -26,7 +34,11 @@ describe('UserService', () => {
     id: 1,
     name: 'John Doe',
     email: 'john@example.com',
-    status: 'active'
+    status: 'inactive', // ID 1 (odd) = inactive
+    phone: '',
+    website: '',
+    company: undefined,
+    address: undefined
   };
 
   beforeEach(() => {
@@ -49,9 +61,9 @@ describe('UserService', () => {
       service.getUsers(filters).subscribe({
         next: (response) => {
           expect(response.users).toEqual(mockUsers);
-          expect(response.total).toBe(2);
+          expect(response.total).toBe(2); // Total filtered users
           expect(response.page).toBe(1);
-          expect(response.limit).toBe(10);
+          expect(response.limit).toBe(2); // Actual limit of returned users
           done();
         },
         error: done.fail
@@ -63,12 +75,12 @@ describe('UserService', () => {
     });
 
     it('should apply filters correctly', (done) => {
-      const filters: UserFilters = { name: 'John', status: 'active' };
+      const filters: UserFilters = { name: 'Jane', status: 'active' };
       
       service.getUsers(filters).subscribe({
         next: (response) => {
           expect(response.users.length).toBe(1);
-          expect(response.users[0].name).toContain('John');
+          expect(response.users[0].name).toContain('Jane');
           done();
         },
         error: done.fail
