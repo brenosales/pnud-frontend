@@ -22,16 +22,22 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Get all users with optional filtering and pagination
+   * Get all users with optional filtering (pagination handled by Angular Material)
    */
   getUsers(filters: UserFilters = {}): Observable<UserListResponse> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.http.get<User[]>(this.API_URL).pipe(
+    return this.http.get<any[]>(this.API_URL).pipe(
       delay(this.MOCK_DELAY), // Simulate network delay
+      map(apiUsers => this.mapApiUsersToUsers(apiUsers)),
       map(users => this.applyFilters(users, filters)),
-      map(filteredUsers => this.createPaginatedResponse(filteredUsers, filters)),
+      map(filteredUsers => ({
+        users: filteredUsers,
+        total: filteredUsers.length,
+        page: 1,
+        limit: filteredUsers.length
+      })),
       tap(response => {
         this.usersSubject.next(response.users);
         this.loadingSubject.next(false);
@@ -47,8 +53,9 @@ export class UserService {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.http.get<User>(`${this.API_URL}/${id}`).pipe(
+    return this.http.get<any>(`${this.API_URL}/${id}`).pipe(
       delay(this.MOCK_DELAY),
+      map(apiUser => this.mapApiUsersToUsers([apiUser])[0]),
       tap(() => this.loadingSubject.next(false)),
       catchError(error => this.handleError(error))
     );
@@ -149,6 +156,43 @@ export class UserService {
   }
 
   /**
+   * Map API users to our User interface
+   */
+  private mapApiUsersToUsers(apiUsers: any[]): User[] {
+    return apiUsers.map(apiUser => ({
+      id: apiUser.id,
+      name: apiUser.name || apiUser.username || 'Unknown Name',
+      email: apiUser.email || '',
+      status: this.generateDeterministicStatus(apiUser.id),
+      phone: apiUser.phone || '',
+      website: apiUser.website || '',
+      company: apiUser.company ? {
+        name: apiUser.company.name || '',
+        catchPhrase: apiUser.company.catchPhrase || '',
+        bs: apiUser.company.bs || ''
+      } : undefined,
+      address: apiUser.address ? {
+        street: apiUser.address.street || '',
+        suite: apiUser.address.suite || '',
+        city: apiUser.address.city || '',
+        zipcode: apiUser.address.zipcode || '',
+        geo: apiUser.address.geo ? {
+          lat: apiUser.address.geo.lat || '',
+          lng: apiUser.address.geo.lng || ''
+        } : undefined
+      } : undefined
+    }));
+  }
+
+  /**
+   * Generate deterministic status for demo purposes
+   */
+  private generateDeterministicStatus(userId: number): 'active' | 'inactive' {
+    // Use userId to ensure same user always has same status
+    return userId % 2 === 0 ? 'active' : 'inactive';
+  }
+
+  /**
    * Apply filters to users
    */
   private applyFilters(users: User[], filters: UserFilters): User[] {
@@ -196,7 +240,7 @@ export class UserService {
 
     return {
       users: paginatedUsers,
-      total: users.length,
+      total: users.length, // This is the total count of filtered users
       page,
       limit
     };

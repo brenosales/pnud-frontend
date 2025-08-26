@@ -51,27 +51,27 @@
         </mat-form-field>
 
         <!-- Status Field -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status" required>
-            <mat-option value="active">
-              <span class="status-option active">
-                <mat-icon>check_circle</mat-icon>
-                Active
-              </span>
-            </mat-option>
-            <mat-option value="inactive">
-              <span class="status-option inactive">
-                <mat-icon>cancel</mat-icon>
-                Inactive
-              </span>
-            </mat-option>
-          </mat-select>
-          <mat-hint>Select the user's current status</mat-hint>
-          <mat-error *ngIf="hasError('status')">
+        <div class="form-field status-toggle-container">
+          <label class="status-label">Status</label>
+          <div class="status-toggle-wrapper">
+            <button 
+              type="button"
+              mat-stroked-button
+              [class.active]="userForm.get('status')?.value === 'active'"
+              [class.inactive]="userForm.get('status')?.value === 'inactive'"
+              (click)="toggleStatus()"
+              [disabled]="submitting"
+              class="status-toggle-button">
+              <mat-icon *ngIf="userForm.get('status')?.value === 'active'">check_circle</mat-icon>
+              <mat-icon *ngIf="userForm.get('status')?.value === 'inactive'">cancel</mat-icon>
+              {{ userForm.get('status')?.value === 'active' ? 'Active' : 'Inactive' }}
+            </button>
+          </div>
+          <div class="status-hint">Click to toggle between Active and Inactive</div>
+          <div *ngIf="hasError('status')" class="status-error">
             {{ getErrorMessage('status') }}
-          </mat-error>
-        </mat-form-field>
+          </div>
+        </div>
 
         <!-- Form Actions -->
         <div class="form-actions">

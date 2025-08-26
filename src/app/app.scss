@@ -1,0 +1,188 @@
+// Global App Styles
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  .toolbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      
+      .app-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+      
+      .app-title {
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+    }
+    
+    .toolbar-right {
+      .version-badge {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+}
+
+.app-content {
+  flex: 1;
+  background: #f5f5f5;
+  min-height: calc(100vh - 64px - 60px); // Subtract toolbar and footer height
+  
+  // Smooth scrolling
+  scroll-behavior: smooth;
+}
+
+.app-footer {
+  background: #fafafa;
+  border-top: 1px solid #e0e0e0;
+  padding: 20px;
+  margin-top: auto;
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #666;
+    font-size: 14px;
+    
+    p {
+      margin: 0;
+    }
+    
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      
+      .heart-icon {
+        color: #e91e63;
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        animation: heartbeat 2s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .app-toolbar {
+    .toolbar-content {
+      padding: 0 16px;
+      
+      .app-title {
+        font-size: 18px;
+      }
+      
+      .version-badge {
+        display: none;
+      }
+    }
+  }
+  
+  .app-footer {
+    .footer-content {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+      padding: 0 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-toolbar {
+    .toolbar-content {
+      .app-title {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.1);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+// Loading state animation
+.app-content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Global theme overrides
+.mat-mdc-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+    transition: box-shadow 0.3s ease !important;
+  }
+}
+
+.mat-mdc-raised-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.mat-mdc-stroked-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+}

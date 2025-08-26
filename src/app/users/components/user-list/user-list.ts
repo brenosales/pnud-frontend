@@ -17,8 +17,6 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 import { User, UserFilters } from '../../../core/models/user.model';
 import { UserService } from '../../../core/services/user.service';
-import { HighlightDirective } from '../../../shared/directives/highlight.directive';
-import { NamePipe } from '../../../shared/pipes/name.pipe';
 import { StatusPipe } from '../../../shared/pipes/status.pipe';
 
 @Component({
@@ -38,9 +36,7 @@ import { StatusPipe } from '../../../shared/pipes/status.pipe';
     MatTooltipModule,
     MatSelectModule,
     ReactiveFormsModule,
-    StatusPipe,
-    NamePipe,
-    HighlightDirective
+    StatusPipe
   ],
   templateUrl: './user-list.html',
   styleUrl: './user-list.scss'
@@ -54,7 +50,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'actions'];
   
   // Pagination
-  totalItems = 0;
+  totalItems = 100; // Default value to prevent "0 of 0" display
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 50];
   
@@ -84,6 +80,11 @@ export class UserListComponent implements OnInit, OnDestroy {
     // Connect paginator and sort to data source
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
+    // Set initial page size
+    if (this.paginator) {
+      this.paginator.pageSize = this.pageSize;
+    }
     
     // Custom sorting for status column
     this.dataSource.sortingDataAccessor = (item, property) => {
@@ -132,9 +133,10 @@ export class UserListComponent implements OnInit, OnDestroy {
    * Load users with current filters
    */
   loadUsers(): void {
+    this.loading = true;
+    this.error = null;
+    
     const filters: UserFilters = {
-      page: this.paginator?.pageIndex + 1 || 1,
-      limit: this.pageSize,
       name: this.searchControl.value || undefined,
       status: (this.statusFilterControl.value as 'active' | 'inactive' | undefined) || undefined,
       sortBy: this.sort?.active as any || 'name',
@@ -143,13 +145,33 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     this.userService.getUsers(filters).subscribe({
       next: (response: any) => {
+        // Load all users and let Angular Material handle pagination
         this.dataSource.data = response.users;
-        this.totalItems = response.total;
+        this.totalItems = response.users.length;
+        
+        // Ensure paginator is connected after data loads
+        if (this.paginator && this.dataSource.paginator !== this.paginator) {
+          this.dataSource.paginator = this.paginator;
+        }
+        
+        // Ensure paginator is properly initialized with the data
+        if (this.paginator) {
+          // Reset to first page and ensure proper display
+          this.paginator.pageIndex = 0;
+        }
+        
+        console.log('Data loaded:', response.users.length, 'users');
+        console.log('Paginator connected:', !!this.dataSource.paginator);
+        console.log('Current page:', this.paginator?.pageIndex);
+        console.log('Page size:', this.paginator?.pageSize);
+        
+        this.loading = false;
         this.error = null;
       },
       error: (error: any) => {
         this.error = error.message;
         this.dataSource.data = [];
+        this.loading = false;
       }
     });
   }
@@ -192,10 +214,31 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle page change
+   * Handle page change (no need to reload data with client-side pagination)
    */
   onPageChange(): void {
-    this.loadUsers();
+    // Ensure paginator is connected to data source
+    if (this.paginator && this.dataSource.paginator !== this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+    
+    console.log('Page changed to:', this.paginator?.pageIndex);
+    console.log('Page size:', this.paginator?.pageSize);
+    console.log('Total items:', this.totalItems);
+    console.log('Data source length:', this.dataSource.data.length);
+    
+    // Angular Material handles pagination automatically
+  }
+
+  /**
+   * Handle page size change
+   */
+  onPageSizeChange(): void {
+    if (this.paginator) {
+      this.pageSize = this.paginator.pageSize;
+      this.paginator.pageIndex = 0;
+    }
+    // No need to reload data - Angular Material handles pagination
   }
 
   /**

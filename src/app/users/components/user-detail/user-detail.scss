@@ -1,0 +1,346 @@
+.user-detail-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+
+    h1 {
+      flex: 1;
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
+  .loading-container,
+  .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+
+    mat-spinner {
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 16px;
+    }
+  }
+
+  .error-container {
+    .error-card {
+      max-width: 500px;
+      
+      .error-content {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          color: #f44336;
+        }
+
+        h3 {
+          margin: 0 0 8px 0;
+          color: #f44336;
+        }
+
+        p {
+          margin: 0;
+          color: rgba(0, 0, 0, 0.7);
+        }
+      }
+
+      .error-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+
+        button {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+      }
+    }
+  }
+
+  .user-details {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+
+    .profile-card {
+      .user-avatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+
+      mat-card-title {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      mat-chip-set {
+        mat-chip {
+          &.active {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+
+            mat-icon {
+              color: #4caf50;
+            }
+          }
+
+          &.inactive {
+            background-color: #ffebee;
+            color: #c62828;
+
+            mat-icon {
+              color: #f44336;
+            }
+          }
+
+          mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+          }
+        }
+      }
+
+      .profile-details {
+        display: grid;
+        gap: 20px;
+        margin-top: 20px;
+      }
+    }
+
+    .info-card {
+      mat-card-header {
+        mat-card-title {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 20px;
+          margin: 0;
+
+          mat-icon {
+            color: #3f51b5;
+          }
+        }
+      }
+
+      .info-grid {
+        display: grid;
+        gap: 20px;
+        margin-top: 16px;
+      }
+
+      .address-details,
+      .company-details {
+        display: grid;
+        gap: 20px;
+        margin-top: 16px;
+      }
+    }
+
+    .detail-item,
+    .info-item,
+    .address-main,
+    .address-geo,
+    .company-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #3f51b5;
+
+      mat-icon {
+        color: #3f51b5;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+
+      .label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .value {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+        font-size: 16px;
+
+        a {
+          color: #3f51b5;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .user-detail-container {
+    padding: 10px;
+
+    .detail-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .header-actions {
+        width: 100%;
+        
+        button {
+          flex: 1;
+          justify-content: center;
+        }
+      }
+    }
+
+    .user-details {
+      .detail-item,
+      .info-item,
+      .address-main,
+      .address-geo,
+      .company-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+
+        mat-icon {
+          align-self: center;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .user-detail-container {
+    .detail-header {
+      .header-actions {
+        flex-direction: column;
+        
+        button {
+          width: 100%;
+        }
+      }
+    }
+
+    .user-details {
+      .profile-card {
+        mat-card-header {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 16px;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+.user-details {
+  animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Hover effects
+.info-card {
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.detail-item,
+.info-item,
+.address-main,
+.address-geo,
+.company-item {
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: #f0f2ff;
+  }
+}

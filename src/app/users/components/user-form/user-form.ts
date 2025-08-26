@@ -197,6 +197,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Toggle user status between active and inactive
+   */
+  toggleStatus(): void {
+    const currentStatus = this.userForm.get('status')?.value;
+    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    this.userForm.patchValue({ status: newStatus });
+  }
+
+  /**
    * Cancel form and go back to user list
    */
   onCancel(): void {
