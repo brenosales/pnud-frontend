@@ -1,48 +1,42 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, delay, map, tap } from 'rxjs/operators';
+import { Observable, delay } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { User, UserFilters, UserFormData, UserListResponse } from '../models/user.model';
+import { UserApiService } from './user-api.service';
+import { UserBusinessService } from './user-business.service';
+import { UserStateService } from './user-state.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private readonly API_URL = 'https://jsonplaceholder.typicode.com/users';
   private readonly MOCK_DELAY = 500; // Simulate network delay
-  
-  private usersSubject = new BehaviorSubject<User[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  private errorSubject = new BehaviorSubject<string | null>(null);
-  
-  public users$ = this.usersSubject.asObservable();
-  public loading$ = this.loadingSubject.asObservable();
-  public error$ = this.errorSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private apiService: UserApiService,
+    private stateService: UserStateService,
+    private businessService: UserBusinessService
+  ) {}
 
   /**
-   * Get all users with optional filtering (pagination handled by Angular Material)
+   * Get all users with optional filtering
    */
   getUsers(filters: UserFilters = {}): Observable<UserListResponse> {
-    this.loadingSubject.next(true);
-    this.errorSubject.next(null);
+    this.stateService.setLoading(true);
+    this.stateService.clearError();
+    this.stateService.setFilters(filters);
 
-    return this.http.get<any[]>(this.API_URL).pipe(
-      delay(this.MOCK_DELAY), // Simulate network delay
-      map(apiUsers => this.mapApiUsersToUsers(apiUsers)),
-      map(users => this.applyFilters(users, filters)),
-      map(filteredUsers => ({
-        users: filteredUsers,
-        total: filteredUsers.length,
-        page: 1,
-        limit: filteredUsers.length
-      })),
-      tap(response => {
-        this.usersSubject.next(response.users);
-        this.loadingSubject.next(false);
+    return this.apiService.fetchUsers().pipe(
+      delay(this.MOCK_DELAY),
+      map(apiUsers => {
+        const users = this.businessService.mapApiUsersToUsers(apiUsers);
+        const filteredUsers = this.businessService.applyFilters(users, filters);
+        return this.businessService.createPaginatedResponse(filteredUsers, filters);
       }),
-      catchError(error => this.handleError(error))
+      tap(response => {
+        this.stateService.setUsers(response.users);
+        this.stateService.setLoading(false);
+      })
     );
   }
 
@@ -50,14 +44,18 @@ export class UserService {
    * Get a single user by ID
    */
   getUserById(id: number): Observable<User> {
-    this.loadingSubject.next(true);
-    this.errorSubject.next(null);
+    this.stateService.setLoading(true);
+    this.stateService.clearError();
 
-    return this.http.get<any>(`${this.API_URL}/${id}`).pipe(
+    return this.apiService.fetchUserById(id).pipe(
       delay(this.MOCK_DELAY),
-      map(apiUser => this.mapApiUsersToUsers([apiUser])[0]),
-      tap(() => this.loadingSubject.next(false)),
-      catchError(error => this.handleError(error))
+      map(apiUser => {
+        const users = this.businessService.mapApiUsersToUsers([apiUser]);
+        return users[0];
+      }),
+      tap(() => {
+        this.stateService.setLoading(false);
+      })
     );
   }
 
@@ -65,23 +63,15 @@ export class UserService {
    * Create a new user
    */
   createUser(userData: UserFormData): Observable<User> {
-    this.loadingSubject.next(true);
-    this.errorSubject.next(null);
+    this.stateService.setLoading(true);
+    this.stateService.clearError();
 
-    const newUser: User = {
-      id: this.generateId(),
-      ...userData
-    };
-
-    // Simulate API call
-    return of(newUser).pipe(
+    return this.apiService.createUser(userData).pipe(
       delay(this.MOCK_DELAY),
       tap(user => {
-        const currentUsers = this.usersSubject.value;
-        this.usersSubject.next([...currentUsers, user]);
-        this.loadingSubject.next(false);
-      }),
-      catchError(error => this.handleError(error))
+        this.stateService.addUser(user);
+        this.stateService.setLoading(false);
+      })
     );
   }
 
@@ -89,24 +79,15 @@ export class UserService {
    * Update an existing user
    */
   updateUser(id: number, userData: UserFormData): Observable<User> {
-    this.loadingSubject.next(true);
-    this.errorSubject.next(null);
+    this.stateService.setLoading(true);
+    this.stateService.clearError();
 
-    const updatedUser: User = {
-      id,
-      ...userData
-    };
-
-    // Simulate API call
-    return of(updatedUser).pipe(
+    return this.apiService.updateUser(id, userData).pipe(
       delay(this.MOCK_DELAY),
       tap(user => {
-        const currentUsers = this.usersSubject.value;
-        const updatedUsers = currentUsers.map(u => u.id === id ? user : u);
-        this.usersSubject.next(updatedUsers);
-        this.loadingSubject.next(false);
-      }),
-      catchError(error => this.handleError(error))
+        this.stateService.updateUser(user);
+        this.stateService.setLoading(false);
+      })
     );
   }
 
@@ -114,164 +95,73 @@ export class UserService {
    * Delete a user
    */
   deleteUser(id: number): Observable<boolean> {
-    this.loadingSubject.next(true);
-    this.errorSubject.next(null);
+    this.stateService.setLoading(true);
+    this.stateService.clearError();
 
-    // Simulate API call
-    return of(true).pipe(
+    return this.apiService.deleteUser(id).pipe(
       delay(this.MOCK_DELAY),
       tap(() => {
-        const currentUsers = this.usersSubject.value;
-        const filteredUsers = currentUsers.filter(u => u.id !== id);
-        this.usersSubject.next(filteredUsers);
-        this.loadingSubject.next(false);
-      }),
-      catchError(error => this.handleError(error))
+        this.stateService.removeUser(id);
+        this.stateService.setLoading(false);
+      })
     );
   }
 
   /**
-   * Search users by name
+   * Search users by name or email
    */
   searchUsers(query: string): Observable<User[]> {
-    if (!query.trim()) {
-      return this.users$;
-    }
-
-    return this.users$.pipe(
-      map(users => 
-        users.filter(user => 
-          user.name.toLowerCase().includes(query.toLowerCase()) ||
-          user.email.toLowerCase().includes(query.toLowerCase())
-        )
-      )
-    );
+    const currentUsers = this.stateService.currentUsers;
+    const searchResults = this.businessService.searchUsers(currentUsers, query);
+    
+    return new Observable(observer => {
+      observer.next(searchResults);
+      observer.complete();
+    });
   }
 
   /**
    * Clear error state
    */
   clearError(): void {
-    this.errorSubject.next(null);
+    this.stateService.clearError();
   }
 
   /**
-   * Map API users to our User interface
+   * Get current state observables
    */
-  private mapApiUsersToUsers(apiUsers: any[]): User[] {
-    return apiUsers.map(apiUser => ({
-      id: apiUser.id,
-      name: apiUser.name || apiUser.username || 'Unknown Name',
-      email: apiUser.email || '',
-      status: this.generateDeterministicStatus(apiUser.id),
-      phone: apiUser.phone || '',
-      website: apiUser.website || '',
-      company: apiUser.company ? {
-        name: apiUser.company.name || '',
-        catchPhrase: apiUser.company.catchPhrase || '',
-        bs: apiUser.company.bs || ''
-      } : undefined,
-      address: apiUser.address ? {
-        street: apiUser.address.street || '',
-        suite: apiUser.address.suite || '',
-        city: apiUser.address.city || '',
-        zipcode: apiUser.address.zipcode || '',
-        geo: apiUser.address.geo ? {
-          lat: apiUser.address.geo.lat || '',
-          lng: apiUser.address.geo.lng || ''
-        } : undefined
-      } : undefined
-    }));
+  get users$() {
+    return this.stateService.users$;
+  }
+
+  get loading$() {
+    return this.stateService.loading$;
+  }
+
+  get error$() {
+    return this.stateService.error$;
+  }
+
+  get filters$() {
+    return this.stateService.filters$;
   }
 
   /**
-   * Generate deterministic status for demo purposes
+   * Get current state values
    */
-  private generateDeterministicStatus(userId: number): 'active' | 'inactive' {
-    // Use userId to ensure same user always has same status
-    return userId % 2 === 0 ? 'active' : 'inactive';
+  get currentUsers() {
+    return this.stateService.currentUsers;
   }
 
-  /**
-   * Apply filters to users
-   */
-  private applyFilters(users: User[], filters: UserFilters): User[] {
-    let filteredUsers = [...users];
-
-    // Filter by name
-    if (filters.name) {
-      filteredUsers = filteredUsers.filter(user =>
-        user.name.toLowerCase().includes(filters.name!.toLowerCase())
-      );
-    }
-
-    // Filter by status
-    if (filters.status) {
-      filteredUsers = filteredUsers.filter(user => user.status === filters.status);
-    }
-
-    // Sort users
-    if (filters.sortBy) {
-      filteredUsers.sort((a, b) => {
-        const aValue = a[filters.sortBy! as keyof User];
-        const bValue = b[filters.sortBy! as keyof User];
-        
-        if (typeof aValue === 'string' && typeof bValue === 'string') {
-          const comparison = aValue.localeCompare(bValue);
-          return filters.sortOrder === 'desc' ? -comparison : comparison;
-        }
-        
-        return 0;
-      });
-    }
-
-    return filteredUsers;
+  get currentFilters() {
+    return this.stateService.currentFilters;
   }
 
-  /**
-   * Create paginated response
-   */
-  private createPaginatedResponse(users: User[], filters: UserFilters): UserListResponse {
-    const page = filters.page || 1;
-    const limit = filters.limit || 10;
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedUsers = users.slice(startIndex, endIndex);
-
-    return {
-      users: paginatedUsers,
-      total: users.length, // This is the total count of filtered users
-      page,
-      limit
-    };
+  get isLoading() {
+    return this.stateService.isLoading;
   }
 
-  /**
-   * Generate a unique ID for new users
-   */
-  private generateId(): number {
-    const currentUsers = this.usersSubject.value;
-    const maxId = currentUsers.length > 0 ? Math.max(...currentUsers.map(u => u.id)) : 0;
-    return maxId + 1;
+  get currentError() {
+    return this.stateService.currentError;
   }
-
-  /**
-   * Handle HTTP errors
-   */
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An error occurred while processing your request.';
-    
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    
-    this.errorSubject.next(errorMessage);
-    this.loadingSubject.next(false);
-    
-    return throwError(() => new Error(errorMessage));
-  }
-}
+} 

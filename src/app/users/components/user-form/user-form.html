@@ -78,6 +78,7 @@
           <button 
             type="button" 
             mat-stroked-button 
+            color="tertiary"
             (click)="onCancel()"
             [disabled]="submitting">
             <mat-icon>cancel</mat-icon>
@@ -86,7 +87,7 @@
           
           <button 
             type="submit" 
-            mat-raised-button 
+            mat-stroked-button 
             color="primary"
             [disabled]="userForm.invalid || submitting">
             <mat-icon *ngIf="!submitting">

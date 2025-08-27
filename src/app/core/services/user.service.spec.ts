@@ -63,7 +63,7 @@ describe('UserService', () => {
           expect(response.users).toEqual(mockUsers);
           expect(response.total).toBe(2); // Total filtered users
           expect(response.page).toBe(1);
-          expect(response.limit).toBe(2); // Actual limit of returned users
+          expect(response.limit).toBe(10); // Limit from filters
           done();
         },
         error: done.fail
