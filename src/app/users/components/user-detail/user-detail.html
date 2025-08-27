@@ -4,7 +4,7 @@
     <button mat-icon-button (click)="goBack()" matTooltip="Back to users">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <h1>User Details</h1>
+    <h1>Detalhes do usuário</h1>
     
     <div class="header-actions" *ngIf="user && !loading">
       <button 
@@ -13,15 +13,15 @@
         (click)="editUser()"
         matTooltip="Edit user">
         <mat-icon>edit</mat-icon>
-        Edit
+        Editar
       </button>
       <button 
         mat-stroked-button 
         color="warn" 
         (click)="deleteUser()"
-        matTooltip="Delete user">
+        matTooltip="Excluir usuário">
         <mat-icon>delete</mat-icon>
-        Delete
+        Excluir
       </button>
     </div>
   </div>
@@ -29,7 +29,7 @@
   <!-- Loading Spinner -->
   <div *ngIf="loading" class="loading-container">
     <mat-spinner diameter="50"></mat-spinner>
-    <p>Loading user details...</p>
+    <p>Carregando detalhes do usuário...</p>
   </div>
 
   <!-- Error Message -->
@@ -39,7 +39,7 @@
         <div class="error-content">
           <mat-icon color="warn">error</mat-icon>
           <div>
-            <h3>Error Loading User</h3>
+            <h3>Erro ao carregar detalhes do usuário</h3>
             <p>{{ error }}</p>
           </div>
         </div>
@@ -50,7 +50,7 @@
           </button>
           <button mat-stroked-button (click)="goBack()">
             <mat-icon>arrow_back</mat-icon>
-            Back to List
+            Voltar para a lista
           </button>
         </div>
       </mat-card-content>
@@ -81,7 +81,7 @@
           <div class="detail-item">
             <mat-icon>badge</mat-icon>
             <div>
-              <span class="label">User ID</span>
+              <span class="label">ID</span>
               <span class="value">#{{ user.id }}</span>
             </div>
           </div>
@@ -104,7 +104,7 @@
       <mat-card-header>
         <mat-card-title>
           <mat-icon>contact_phone</mat-icon>
-          Contact Information
+          Informações de contato
         </mat-card-title>
       </mat-card-header>
       
@@ -113,7 +113,7 @@
           <div class="info-item" *ngIf="user.phone">
             <mat-icon>phone</mat-icon>
             <div>
-              <span class="label">Phone</span>
+              <span class="label">Telefone</span>
               <span class="value">
                 <a [href]="'tel:' + user.phone">{{ user.phone }}</a>
               </span>
@@ -141,7 +141,7 @@
       <mat-card-header>
         <mat-card-title>
           <mat-icon>location_on</mat-icon>
-          Address
+          Endereço
         </mat-card-title>
       </mat-card-header>
       
@@ -150,7 +150,7 @@
           <div class="address-main">
             <mat-icon>home</mat-icon>
             <div>
-              <span class="label">Address</span>
+              <span class="label">Endereço</span>
               <span class="value">{{ getFormattedAddress() }}</span>
             </div>
           </div>
@@ -158,7 +158,7 @@
           <div class="address-geo" *ngIf="user.address.geo">
             <mat-icon>my_location</mat-icon>
             <div>
-              <span class="label">Coordinates</span>
+              <span class="label">Coordenadas</span>
               <span class="value">
                 {{ user.address.geo.lat }}, {{ user.address.geo.lng }}
                 <a 
@@ -180,7 +180,7 @@
       <mat-card-header>
         <mat-card-title>
           <mat-icon>business</mat-icon>
-          Company
+          Empresa
         </mat-card-title>
       </mat-card-header>
       
@@ -189,7 +189,7 @@
           <div class="company-item">
             <mat-icon>business_center</mat-icon>
             <div>
-              <span class="label">Company Name</span>
+              <span class="label">Nome da empresa</span>
               <span class="value">{{ user.company?.name }}</span>
             </div>
           </div>
@@ -197,7 +197,7 @@
           <div class="company-item" *ngIf="user.company?.catchPhrase">
             <mat-icon>format_quote</mat-icon>
             <div>
-              <span class="label">Catch Phrase</span>
+              <span class="label">Slogan</span>
               <span class="value">"{{ user.company?.catchPhrase }}"</span>
             </div>
           </div>
@@ -205,7 +205,7 @@
           <div class="company-item" *ngIf="user.company?.bs">
             <mat-icon>trending_up</mat-icon>
             <div>
-              <span class="label">Business</span>
+              <span class="label">Ramo de atividade</span>
               <span class="value">{{ user.company?.bs }}</span>
             </div>
           </div>

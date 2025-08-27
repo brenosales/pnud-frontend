@@ -4,10 +4,10 @@
     <mat-card-header>
       <mat-card-title>
         <mat-icon>people</mat-icon>
-        User Management
+        Usuários
       </mat-card-title>
       <mat-card-subtitle>
-        Manage your users with ease
+        Listagem de usuários
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions align="end">
@@ -15,9 +15,9 @@
         mat-stroked-button    
         color="primary" 
         (click)="createUser()"
-        matTooltip="Add new user">
+        matTooltip="Adicionar usuário">
         <mat-icon>add</mat-icon>
-        Add User
+        Adicionar usuário
       </button>
     </mat-card-actions>
   </mat-card>
@@ -27,11 +27,11 @@
     <mat-card-content>
       <div class="filters-row">
         <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Search users</mat-label>
+          <mat-label>Pesquisar usuários</mat-label>
           <input 
             matInput 
             [formControl]="searchControl"
-            placeholder="Search by name or email..."
+            placeholder="Pesquisar por nome ou email..."
             matTooltip="Type to search users">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
@@ -39,7 +39,7 @@
         <mat-form-field appearance="outline" class="status-filter">
           <mat-label>Status</mat-label>
           <mat-select [formControl]="statusFilterControl">
-            <mat-option value="">All Statuses</mat-option>
+            <mat-option value="">Todos os status</mat-option>
             <mat-option value="active">Active</mat-option>
             <mat-option value="inactive">Inactive</mat-option>
           </mat-select>
@@ -48,9 +48,9 @@
         <button 
           mat-stroked-button 
           (click)="clearFilters()"
-          matTooltip="Clear all filters">
+          matTooltip="Limpar filtros">
           <mat-icon>clear</mat-icon>
-          Clear
+          Limpar filtros
         </button>
       </div>
     </mat-card-content>
@@ -87,7 +87,7 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
             <td mat-cell *matCellDef="let user"> 
               {{ user.name }}
             </td>
@@ -113,28 +113,28 @@
 
           <!-- Actions Column -->
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> Ações </th>
             <td mat-cell *matCellDef="let user"> 
               <div class="action-buttons">
                 <button 
                   mat-icon-button 
                   color="primary" 
                   (click)="viewUser(user)"
-                  matTooltip="View user details">
+                  matTooltip="Ver detalhes do usuário">
                   <mat-icon>visibility</mat-icon>
                 </button>
                 <button 
                   mat-icon-button 
                   color="accent" 
                   (click)="editUser(user)"
-                  matTooltip="Edit user">
+                  matTooltip="Editar usuário">
                   <mat-icon>edit</mat-icon>
                 </button>
                 <button 
                   mat-icon-button 
                   color="warn" 
                   (click)="deleteUser(user)"
-                  matTooltip="Delete user">
+                  matTooltip="Deletar usuário">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

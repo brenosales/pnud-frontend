@@ -19,5 +19,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class AppComponent {
-  title = 'User Management System';
+  title = 'Sistema de Gerenciamento de Usuários';
 }

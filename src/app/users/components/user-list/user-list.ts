@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 import { User, UserFilters } from '../../../core/models/user.model';
+import { ConfigurationService } from '../../../core/services/configuration.service';
 import { UserService } from '../../../core/services/user.service';
 import { StatusPipe } from '../../../shared/pipes/status.pipe';
 
@@ -51,8 +52,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   
   // Pagination
   totalItems = 100; // Default value to prevent "0 of 0" display
-  pageSize = 10;
-  pageSizeOptions = [5, 10, 25, 50];
+  pageSize: number;
+  pageSizeOptions: readonly number[];
   
   // Loading and error states
   loading = false;
@@ -67,8 +68,12 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private configService: ConfigurationService
+  ) {
+    this.pageSize = this.configService.getDefaultPageSize();
+    this.pageSizeOptions = this.configService.getPageSizeOptions();
+  }
 
   ngOnInit(): void {
     this.setupSearch();
@@ -110,7 +115,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.searchControl.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        debounceTime(300), // Wait 300ms after user stops typing
+        debounceTime(this.configService.getSearchDebounceTime()), // Wait for configured debounce time
         distinctUntilChanged() // Only emit if value changed
       )
       .subscribe(() => {
@@ -194,7 +199,7 @@ export class UserListComponent implements OnInit, OnDestroy {
    * Delete user with confirmation
    */
   deleteUser(user: User): void {
-    if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+    if (confirm(`Tem certeza de que deseja excluir ${user.name}?`)) {
       this.userService.deleteUser(user.id).subscribe({
         next: () => {
           this.loadUsers(); // Reload the list

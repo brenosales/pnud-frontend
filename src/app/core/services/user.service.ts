@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { User, UserFilters, UserFormData, UserListResponse } from '../models/user.model';
+import { ConfigurationService } from './configuration.service';
 import { UserApiService } from './user-api.service';
 import { UserBusinessService } from './user-business.service';
 import { UserStateService } from './user-state.service';
@@ -10,13 +11,16 @@ import { UserStateService } from './user-state.service';
   providedIn: 'root'
 })
 export class UserService {
-  private readonly MOCK_DELAY = 500; // Simulate network delay
+  private readonly mockDelay: number;
 
   constructor(
     private apiService: UserApiService,
     private stateService: UserStateService,
-    private businessService: UserBusinessService
-  ) {}
+    private businessService: UserBusinessService,
+    private configService: ConfigurationService
+  ) {
+    this.mockDelay = this.configService.getMockDelay();
+  }
 
   /**
    * Get all users with optional filtering
@@ -27,7 +31,7 @@ export class UserService {
     this.stateService.setFilters(filters);
 
     return this.apiService.fetchUsers().pipe(
-      delay(this.MOCK_DELAY),
+      delay(this.mockDelay),
       map(apiUsers => {
         const users = this.businessService.mapApiUsersToUsers(apiUsers);
         const filteredUsers = this.businessService.applyFilters(users, filters);
@@ -48,7 +52,7 @@ export class UserService {
     this.stateService.clearError();
 
     return this.apiService.fetchUserById(id).pipe(
-      delay(this.MOCK_DELAY),
+      delay(this.mockDelay),
       map(apiUser => {
         const users = this.businessService.mapApiUsersToUsers([apiUser]);
         return users[0];
@@ -67,7 +71,7 @@ export class UserService {
     this.stateService.clearError();
 
     return this.apiService.createUser(userData).pipe(
-      delay(this.MOCK_DELAY),
+      delay(this.mockDelay),
       tap(user => {
         this.stateService.addUser(user);
         this.stateService.setLoading(false);
@@ -83,7 +87,7 @@ export class UserService {
     this.stateService.clearError();
 
     return this.apiService.updateUser(id, userData).pipe(
-      delay(this.MOCK_DELAY),
+      delay(this.mockDelay),
       tap(user => {
         this.stateService.updateUser(user);
         this.stateService.setLoading(false);
@@ -99,7 +103,7 @@ export class UserService {
     this.stateService.clearError();
 
     return this.apiService.deleteUser(id).pipe(
-      delay(this.MOCK_DELAY),
+      delay(this.mockDelay),
       tap(() => {
         this.stateService.removeUser(id);
         this.stateService.setLoading(false);

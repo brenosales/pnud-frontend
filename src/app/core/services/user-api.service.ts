@@ -3,14 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User, UserFormData } from '../models/user.model';
+import { ConfigurationService } from './configuration.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserApiService {
-  private readonly API_URL = 'https://jsonplaceholder.typicode.com/users';
+  private readonly API_URL: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigurationService
+  ) {
+    this.API_URL = this.configService.getFullApiUrl('users');
+  }
 
   /**
    * Fetch all users from the API

@@ -1,165 +1,165 @@
-# 👥 User Management System
+# 👥 Sistema de Gerenciamento de Usuários
 
-A modern, responsive Angular application for managing users with full CRUD operations, built following Test-Driven Development (TDD) principles and Angular best practices.
+Uma aplicação Angular moderna e responsiva para gerenciar usuários com operações CRUD completas, construída seguindo os princípios de Desenvolvimento Orientado a Testes (TDD) e as melhores práticas do Angular.
 
 ![Angular](https://img.shields.io/badge/Angular-18.x-red?style=flat-square&logo=angular)
 ![Material Design](https://img.shields.io/badge/Material%20Design-3.x-blue?style=flat-square&logo=material-design)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)
-![Tests](https://img.shields.io/badge/Tests-56%20passing-green?style=flat-square)
-![Test Coverage](https://img.shields.io/badge/Coverage-High-green?style=flat-square)
+![Tests](https://img.shields.io/badge/Tests-118%20passing-green?style=flat-square)
+![Test Coverage](https://img.shields.io/badge/Coverage-Alta-green?style=flat-square)
 
-## 🚀 **Features**
+## 🚀 **Funcionalidades**
 
-### 📋 **Core Functionality**
-- **User Listing**: Paginated table with sorting, filtering, and search
-- **User Creation**: Reactive form with real-time validation
-- **User Editing**: Pre-populated form for updating user information
-- **User Details**: Comprehensive view of user information
-- **User Deletion**: Safe deletion with confirmation dialogs
+### 📋 **Funcionalidades Principais**
+- **Listagem de Usuários**: Tabela paginada com ordenação, filtros e busca
+- **Criação de Usuários**: Formulário reativo com validação em tempo real
+- **Edição de Usuários**: Formulário pré-preenchido para atualizar informações
+- **Detalhes do Usuário**: Visualização abrangente das informações do usuário
+- **Exclusão de Usuários**: Exclusão segura com diálogos de confirmação
 
-### 🎨 **User Experience**
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
-- **Material Design**: Professional, consistent UI components
-- **Real-time Search**: Instant filtering with highlighted results
-- **Loading States**: Clear feedback during async operations
-- **Error Handling**: User-friendly error messages with retry options
+### 🎨 **Experiência do Usuário**
+- **Design Responsivo**: Funciona perfeitamente em desktop, tablet e mobile
+- **Material Design**: Componentes de UI profissionais e consistentes
+- **Busca em Tempo Real**: Filtragem instantânea com resultados destacados
+- **Estados de Carregamento**: Feedback claro durante operações assíncronas
+- **Tratamento de Erros**: Mensagens de erro amigáveis com opções de tentativa
 
-### 🏗️ **Technical Features**
-- **Standalone Components**: Modern Angular architecture
-- **Lazy Loading**: Optimized performance with route-based code splitting
-- **Reactive Forms**: Type-safe forms with comprehensive validation
-- **Custom Pipes**: Data formatting and transformation
-- **Custom Directives**: Enhanced UI interactions
-- **RxJS**: Reactive programming patterns
-- **Comprehensive Testing**: 56 unit tests with high coverage
+### 🏗️ **Recursos Técnicos**
+- **Componentes Standalone**: Arquitetura Angular moderna
+- **Carregamento Lazy**: Performance otimizada com divisão de código baseada em rotas
+- **Formulários Reativos**: Formulários type-safe com validação abrangente
+- **Pipes Personalizados**: Formatação e transformação de dados
+- **Diretivas Personalizadas**: Interações de UI aprimoradas
+- **RxJS**: Padrões de programação reativa
+- **Testes Abrangentes**: 118 testes unitários com alta cobertura
 
-## 🛠️ **Technology Stack**
+## 🛠️ **Stack Tecnológica**
 
-| Technology | Version | Purpose |
+| Tecnologia | Versão | Propósito |
 |------------|---------|---------|
-| **Angular** | 18.x | Frontend framework |
-| **Angular Material** | 18.x | UI component library |
-| **TypeScript** | 5.x | Programming language |
-| **RxJS** | 7.x | Reactive programming |
-| **Jasmine/Karma** | Latest | Testing framework |
-| **SCSS** | Latest | Styling |
+| **Angular** | 18.x | Framework frontend |
+| **Angular Material** | 18.x | Biblioteca de componentes UI |
+| **TypeScript** | 5.x | Linguagem de programação |
+| **RxJS** | 7.x | Programação reativa |
+| **Jasmine/Karma** | Latest | Framework de testes |
+| **SCSS** | Latest | Estilização |
 
-## 📦 **Installation & Setup**
+## 📦 **Instalação e Configuração**
 
-### **Prerequisites**
-- Node.js (v18 or higher)
-- npm (v9 or higher)
-- Angular CLI (v18 or higher)
+### **Pré-requisitos**
+- Node.js (v18 ou superior)
+- npm (v9 ou superior)
+- Angular CLI (v18 ou superior)
 
-### **Installation Steps**
+### **Passos de Instalação**
 
-1. **Clone the repository**
+1. **Clone o repositório**
    ```bash
    git clone <repository-url>
    cd user-management-system
    ```
 
-2. **Install dependencies**
+2. **Instale as dependências**
    ```bash
    npm install
    ```
 
-3. **Start the development server**
+3. **Inicie o servidor de desenvolvimento**
    ```bash
    npm start
    ```
 
-4. **Open your browser**
-   Navigate to `http://localhost:4200`
+4. **Abra seu navegador**
+   Navegue para `http://localhost:4200`
 
-## 🧪 **Testing**
+## 🧪 **Testes**
 
-This project follows **Test-Driven Development (TDD)** principles with comprehensive test coverage.
+Este projeto segue os princípios de **Desenvolvimento Orientado a Testes (TDD)** com cobertura abrangente de testes.
 
-### **Run Tests**
+### **Executar Testes**
 ```bash
-# Run all tests
+# Executar todos os testes
 npm test
 
-# Run tests in watch mode
+# Executar testes em modo watch
 npm run test:watch
 
-# Run tests with coverage
+# Executar testes com cobertura
 npm run test:coverage
 ```
 
-### **Test Categories**
-- **Unit Tests**: 56 tests covering services, components, pipes, and directives
-- **Integration Tests**: Component interaction testing
-- **E2E Tests**: Full user journey testing (ready for implementation)
+### **Categorias de Testes**
+- **Testes Unitários**: 118 testes cobrindo serviços, componentes, pipes e diretivas
+- **Testes de Integração**: Testes de interação entre componentes
+- **Testes E2E**: Testes de jornada completa do usuário (pronto para implementação)
 
-### **Test Statistics**
-- ✅ **56 tests passing**
-- 🎯 **High test coverage**
-- 🔄 **Continuous integration ready**
+### **Estatísticas dos Testes**
+- ✅ **118 testes passando**
+- 🎯 **Alta cobertura de testes**
+- 🔄 **Pronto para integração contínua**
 
-## 🏛️ **Architecture**
+## 🏛️ **Arquitetura**
 
-### **Project Structure**
+### **Estrutura do Projeto**
 ```
 src/
 ├── app/
-│   ├── core/                    # Core functionality
-│   │   ├── models/             # TypeScript interfaces
-│   │   └── services/           # Business logic services
-│   ├── shared/                 # Reusable components
-│   │   ├── pipes/              # Custom pipes
-│   │   └── directives/         # Custom directives
-│   ├── users/                  # User management feature
-│   │   ├── components/         # Feature components
-│   │   └── users.routes.ts     # Feature routing
-│   ├── app.routes.ts           # Main routing
-│   └── app.config.ts           # App configuration
-└── styles.scss                # Global styles
+│   ├── core/                    # Funcionalidades principais
+│   │   ├── models/             # Interfaces TypeScript
+│   │   └── services/           # Serviços de lógica de negócio
+│   ├── shared/                 # Componentes reutilizáveis
+│   │   ├── pipes/              # Pipes personalizados
+│   │   └── directives/         # Diretivas personalizadas
+│   ├── users/                  # Funcionalidade de gerenciamento de usuários
+│   │   ├── components/         # Componentes da funcionalidade
+│   │   └── users.routes.ts     # Roteamento da funcionalidade
+│   ├── app.routes.ts           # Roteamento principal
+│   └── app.config.ts           # Configuração da aplicação
+└── styles.scss                # Estilos globais
 ```
 
-### **Design Patterns**
-- **Feature Modules**: Organized by functionality
-- **Standalone Components**: Modern Angular architecture
-- **Reactive Programming**: RxJS for state management
-- **Service Layer**: Separation of concerns
-- **Observer Pattern**: Event-driven updates
+### **Padrões de Design**
+- **Módulos de Funcionalidade**: Organizados por funcionalidade
+- **Componentes Standalone**: Arquitetura Angular moderna
+- **Programação Reativa**: RxJS para gerenciamento de estado
+- **Camada de Serviços**: Separação de responsabilidades
+- **Padrão Observer**: Atualizações orientadas a eventos
 
-## 🎯 **Usage Guide**
+## 🎯 **Guia de Uso**
 
-### **User List View**
-- **Browse Users**: View paginated list of users
-- **Search**: Real-time search by name or email
-- **Filter**: Filter by user status (active/inactive)
-- **Sort**: Click column headers to sort
-- **Actions**: View, edit, or delete users
+### **Visualização da Lista de Usuários**
+- **Navegar Usuários**: Visualizar lista paginada de usuários
+- **Buscar**: Busca em tempo real por nome ou email
+- **Filtrar**: Filtrar por status do usuário (ativo/inativo)
+- **Ordenar**: Clicar nos cabeçalhos das colunas para ordenar
+- **Ações**: Visualizar, editar ou excluir usuários
 
-### **User Form**
-- **Create User**: Fill out the form with user details
-- **Edit User**: Modify existing user information
-- **Validation**: Real-time validation with helpful messages
-- **Status**: Set user as active or inactive
+### **Formulário de Usuário**
+- **Criar Usuário**: Preencher o formulário com detalhes do usuário
+- **Editar Usuário**: Modificar informações existentes do usuário
+- **Validação**: Validação em tempo real com mensagens úteis
+- **Status**: Definir usuário como ativo ou inativo
 
-### **User Details**
-- **Profile Information**: Complete user profile view
-- **Contact Details**: Phone, email, and website
-- **Address**: Full address with map integration
-- **Company**: Business information and details
+### **Detalhes do Usuário**
+- **Informações do Perfil**: Visualização completa do perfil do usuário
+- **Detalhes de Contato**: Telefone, email e website
+- **Endereço**: Endereço completo com integração de mapa
+- **Empresa**: Informações e detalhes empresariais
 
-## 🔧 **Development**
+## 🔧 **Desenvolvimento**
 
-### **Development Server**
+### **Servidor de Desenvolvimento**
 ```bash
 npm start
 ```
-Navigate to `http://localhost:4200` for live reload.
+Navegue para `http://localhost:4200` para recarregamento automático.
 
 ### **Build**
 ```bash
-# Development build
+# Build de desenvolvimento
 npm run build
 
-# Production build
+# Build de produção
 npm run build:prod
 ```
 
@@ -168,121 +168,121 @@ npm run build:prod
 npm run lint
 ```
 
-### **Code Formatting**
+### **Formatação de Código**
 ```bash
 npm run format
 ```
 
-## 📝 **API Integration**
+## 📝 **Integração com API**
 
-### **Data Source**
-The application uses [JSONPlaceholder](https://jsonplaceholder.typicode.com/) for demo data:
-- **GET** `/users` - Fetch all users
-- **GET** `/users/{id}` - Fetch user by ID
-- **POST** `/users` - Create user (simulated)
-- **PUT** `/users/{id}` - Update user (simulated)
-- **DELETE** `/users/{id}` - Delete user (simulated)
+### **Fonte de Dados**
+A aplicação usa [JSONPlaceholder](https://jsonplaceholder.typicode.com/) para dados de demonstração:
+- **GET** `/users` - Buscar todos os usuários
+- **GET** `/users/{id}` - Buscar usuário por ID
+- **POST** `/users` - Criar usuário (simulado)
+- **PUT** `/users/{id}` - Atualizar usuário (simulado)
+- **DELETE** `/users/{id}` - Excluir usuário (simulado)
 
-### **Service Layer**
-The `UserService` provides:
-- **CRUD Operations**: Create, Read, Update, Delete
-- **Error Handling**: Comprehensive error management
-- **Loading States**: Progress indicators
-- **Caching**: Optimized data fetching
+### **Camada de Serviços**
+O `UserService` fornece:
+- **Operações CRUD**: Criar, Ler, Atualizar, Excluir
+- **Tratamento de Erros**: Gerenciamento abrangente de erros
+- **Estados de Carregamento**: Indicadores de progresso
+- **Cache**: Busca de dados otimizada
 
-## 🎨 **Customization**
+## 🎨 **Personalização**
 
-### **Themes**
-The application uses Angular Material themes. To customize:
-1. Edit `src/styles.scss`
-2. Modify Material theme variables
-3. Update component-specific styles
+### **Temas**
+A aplicação usa temas do Angular Material. Para personalizar:
+1. Edite `src/styles.scss`
+2. Modifique variáveis do tema Material
+3. Atualize estilos específicos dos componentes
 
-### **Adding Features**
-1. Create feature module: `ng generate module feature-name`
-2. Add routing: Update routes configuration
-3. Implement components following existing patterns
-4. Write tests following TDD principles
+### **Adicionando Funcionalidades**
+1. Crie módulo de funcionalidade: `ng generate module feature-name`
+2. Adicione roteamento: Atualize a configuração de rotas
+3. Implemente componentes seguindo padrões existentes
+4. Escreva testes seguindo princípios TDD
 
-## 🚀 **Deployment**
+## 🚀 **Deploy**
 
-### **Production Build**
+### **Build de Produção**
 ```bash
 npm run build:prod
 ```
 
-### **Deployment Platforms**
-- **Vercel**: Zero-config deployment
-- **Firebase Hosting**: Google Cloud integration
-- **Netlify**: Continuous deployment
-- **GitHub Pages**: Free static hosting
+### **Plataformas de Deploy**
+- **Vercel**: Deploy sem configuração
+- **Firebase Hosting**: Integração com Google Cloud
+- **Netlify**: Deploy contínuo
+- **GitHub Pages**: Hospedagem estática gratuita
 
-### **Environment Configuration**
-Configure environment variables in:
-- `src/environments/environment.ts` (development)
-- `src/environments/environment.prod.ts` (production)
+### **Configuração de Ambiente**
+Configure variáveis de ambiente em:
+- `src/environments/environment.ts` (desenvolvimento)
+- `src/environments/environment.prod.ts` (produção)
 
-## 🤝 **Contributing**
+## 🤝 **Contribuindo**
 
-### **Development Workflow**
-1. **Fork** the repository
-2. **Create** a feature branch
-3. **Write tests** following TDD principles
-4. **Implement** the feature
-5. **Ensure all tests pass**
-6. **Submit** a pull request
+### **Fluxo de Desenvolvimento**
+1. **Faça fork** do repositório
+2. **Crie** uma branch de funcionalidade
+3. **Escreva testes** seguindo princípios TDD
+4. **Implemente** a funcionalidade
+5. **Certifique-se de que todos os testes passem**
+6. **Envie** um pull request
 
-### **Code Standards**
-- Follow Angular style guide
-- Use TypeScript strict mode
-- Write comprehensive tests
-- Use meaningful commit messages
-- Follow conventional commits
+### **Padrões de Código**
+- Siga o guia de estilo do Angular
+- Use modo estrito do TypeScript
+- Escreva testes abrangentes
+- Use mensagens de commit significativas
+- Siga commits convencionais
 
 ## 📈 **Performance**
 
-### **Optimizations**
-- **Lazy Loading**: Route-based code splitting
-- **OnPush Strategy**: Optimized change detection
-- **Debounced Search**: Reduced API calls
-- **Virtual Scrolling**: Efficient list rendering
-- **Tree Shaking**: Minimal bundle size
+### **Otimizações**
+- **Carregamento Lazy**: Divisão de código baseada em rotas
+- **Estratégia OnPush**: Detecção de mudanças otimizada
+- **Busca com Debounce**: Redução de chamadas à API
+- **Scroll Virtual**: Renderização eficiente de listas
+- **Tree Shaking**: Tamanho mínimo do bundle
 
-### **Metrics**
+### **Métricas**
 - **First Contentful Paint**: < 1.5s
 - **Largest Contentful Paint**: < 2.5s
-- **Bundle Size**: Optimized for production
+- **Tamanho do Bundle**: Otimizado para produção
 
-## 🔒 **Security**
+## 🔒 **Segurança**
 
-### **Best Practices**
-- **HTTPS**: Secure communication
-- **Input Validation**: Client and server-side
-- **XSS Protection**: Sanitized data display
-- **CSRF Protection**: Token-based validation
-- **Content Security Policy**: Enhanced security headers
+### **Melhores Práticas**
+- **HTTPS**: Comunicação segura
+- **Validação de Entrada**: Cliente e servidor
+- **Proteção XSS**: Exibição de dados sanitizados
+- **Proteção CSRF**: Validação baseada em token
+- **Política de Segurança de Conteúdo**: Cabeçalhos de segurança aprimorados
 
-## 📚 **Resources**
+## 📚 **Recursos**
 
-### **Documentation**
-- [Angular Documentation](https://angular.dev)
+### **Documentação**
+- [Documentação do Angular](https://angular.dev)
 - [Angular Material](https://material.angular.io)
-- [RxJS Guide](https://rxjs.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs)
+- [Guia RxJS](https://rxjs.dev)
+- [Manual TypeScript](https://www.typescriptlang.org/docs)
 
-### **Learning**
-- [Angular Tutorial](https://angular.dev/tutorial)
-- [Material Design Guidelines](https://material.io)
-- [TDD Principles](https://www.agilealliance.org/glossary/tdd)
+### **Aprendizado**
+- [Tutorial do Angular](https://angular.dev/tutorial)
+- [Diretrizes do Material Design](https://material.io)
+- [Princípios TDD](https://www.agilealliance.org/glossary/tdd)
 
-## 📄 **License**
+## 📄 **Licença**
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
 
-## 👨‍💻 **Author**
+## 👨‍💻 **Autor**
 
-Built with ❤️ following Test-Driven Development principles and Angular best practices.
+Construído com ❤️ seguindo os princípios de Desenvolvimento Orientado a Testes e as melhores práticas do Angular.
 
 ---
 
-**Happy Coding! 🚀**
+**Feliz Programação! 🚀**

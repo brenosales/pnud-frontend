@@ -113,8 +113,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
         },
         error: (error: any) => {
           this.snackBar.open(
-            `Error loading user: ${error.message}`, 
-            'Close', 
+            `Erro ao carregar usuário: ${error.message}`, 
+            'Fechar', 
             { duration: 5000 }
           );
           this.loading = false;
@@ -151,8 +151,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (user: any) => {
           this.snackBar.open(
-            `User "${user.name}" created successfully!`, 
-            'Close', 
+            `Usuário "${user.name}" criado com sucesso!`, 
+            'Fechar', 
             { duration: 3000 }
           );
           this.router.navigate(['/users']);
@@ -179,16 +179,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (user: any) => {
           this.snackBar.open(
-            `User "${user.name}" updated successfully!`, 
-            'Close', 
+            `Usuário "${user.name}" atualizado com sucesso!`, 
+            'Fechar', 
             { duration: 3000 }
           );
           this.router.navigate(['/users']);
         },
         error: (error: any) => {
           this.snackBar.open(
-            `Error updating user: ${error.message}`, 
-            'Close', 
+            `Erro ao atualizar usuário: ${error.message}`, 
+            'Fechar', 
             { duration: 5000 }
           );
           this.submitting = false;
@@ -231,26 +231,26 @@ export class UserFormComponent implements OnInit, OnDestroy {
     if (!control || !control.errors) return '';
 
     if (control.errors['required']) {
-      return `${this.getFieldDisplayName(fieldName)} is required`;
+      return `${this.getFieldDisplayName(fieldName)} é obrigatório`;
     }
     
     if (control.errors['minlength']) {
-      return `${this.getFieldDisplayName(fieldName)} must be at least ${control.errors['minlength'].requiredLength} characters`;
+      return `${this.getFieldDisplayName(fieldName)} deve ter pelo menos ${control.errors['minlength'].requiredLength} caracteres`;
     }
     
     if (control.errors['maxlength']) {
-      return `${this.getFieldDisplayName(fieldName)} must not exceed ${control.errors['maxlength'].requiredLength} characters`;
+      return `${this.getFieldDisplayName(fieldName)} não deve exceder ${control.errors['maxlength'].requiredLength} caracteres`;
     }
     
     if (control.errors['email']) {
-      return 'Please enter a valid email address';
+      return 'Por favor, insira um endereço de email válido';
     }
     
     if (control.errors['pattern']) {
-      return `${this.getFieldDisplayName(fieldName)} contains invalid characters`;
+      return `${this.getFieldDisplayName(fieldName)} contém caracteres inválidos`;
     }
 
-    return 'Invalid input';
+    return 'Entrada inválida';
   }
 
   /**
@@ -258,7 +258,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
    */
   private getFieldDisplayName(fieldName: string): string {
     const fieldNames: { [key: string]: string } = {
-      name: 'Name',
+      name: 'Nome',
       email: 'Email',
       status: 'Status'
     };

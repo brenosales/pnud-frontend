@@ -115,7 +115,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   deleteUser(): void {
     if (!this.user) return;
 
-    const confirmMessage = `Are you sure you want to delete ${this.user.name}? This action cannot be undone.`;
+    const confirmMessage = `Tem certeza de que deseja excluir ${this.user.name}? Esta ação não pode ser desfeita.`;
     
     if (confirm(confirmMessage)) {
       this.loading = true;
@@ -125,11 +125,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.router.navigate(['/users'], { 
-              queryParams: { message: `User "${this.user!.name}" was deleted successfully` }
+              queryParams: { message: `Usuário "${this.user!.name}" foi excluído com sucesso` }
             });
           },
           error: (error: any) => {
-            this.error = error.message || 'Failed to delete user';
+            this.error = error.message || 'Falha ao excluir usuário';
             this.loading = false;
           }
         });
