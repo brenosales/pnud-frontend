@@ -2,7 +2,7 @@ import { APP_CONSTANTS } from '../app/core/constants/app.constants';
 
 export const environment = {
   production: true,
-  apiUrl: 'https://api.yourproduction.com', // Replace with your production API URL
+  apiUrl: 'https://jsonplaceholder.typicode.com',
   apiEndpoints: {
     users: '/users'
   },
