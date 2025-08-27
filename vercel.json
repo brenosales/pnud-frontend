@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "name": "user-management-system",
+  "builds": [
+    {
+      "src": "dist/user-management-system/browser/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/dist/user-management-system/browser/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/user-management-system/browser/index.html"
+    }
+  ],
+  "functions": {
+    "app/api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "buildCommand": "npm run build:prod",
+  "outputDirectory": "dist/user-management-system/browser",
+  "installCommand": "npm install",
+  "framework": "angular"
+}
