@@ -1,6 +1,10 @@
 # 👥 Sistema de Gerenciamento de Usuários
 
-Uma aplicação Angular moderna e responsiva para gerenciar usuários com operações CRUD completas, construída seguindo os princípios de Desenvolvimento Orientado a Testes (TDD) e as melhores práticas do Angular.
+https://pnud-frontend.vercel.app/
+
+Aplicação Angular moderna e responsiva para gerenciar usuários com operações CRUD completas, construída seguindo os princípios de Desenvolvimento Orientado a Testes (TDD) e as melhores práticas do Angular.
+
+
 
 ![Angular](https://img.shields.io/badge/Angular-18.x-red?style=flat-square&logo=angular)
 ![Material Design](https://img.shields.io/badge/Material%20Design-3.x-blue?style=flat-square&logo=material-design)
@@ -91,7 +95,6 @@ npm run test:coverage
 ### **Categorias de Testes**
 - **Testes Unitários**: 118 testes cobrindo serviços, componentes, pipes e diretivas
 - **Testes de Integração**: Testes de interação entre componentes
-- **Testes E2E**: Testes de jornada completa do usuário (pronto para implementação)
 
 ### **Estatísticas dos Testes**
 - ✅ **118 testes passando**
@@ -190,99 +193,13 @@ O `UserService` fornece:
 - **Estados de Carregamento**: Indicadores de progresso
 - **Cache**: Busca de dados otimizada
 
-## 🎨 **Personalização**
-
-### **Temas**
-A aplicação usa temas do Angular Material. Para personalizar:
-1. Edite `src/styles.scss`
-2. Modifique variáveis do tema Material
-3. Atualize estilos específicos dos componentes
-
-### **Adicionando Funcionalidades**
-1. Crie módulo de funcionalidade: `ng generate module feature-name`
-2. Adicione roteamento: Atualize a configuração de rotas
-3. Implemente componentes seguindo padrões existentes
-4. Escreva testes seguindo princípios TDD
-
 ## 🚀 **Deploy**
 
 ### **Build de Produção**
 ```bash
 npm run build:prod
 ```
-
-### **Plataformas de Deploy**
-- **Vercel**: Deploy sem configuração
-- **Firebase Hosting**: Integração com Google Cloud
-- **Netlify**: Deploy contínuo
-- **GitHub Pages**: Hospedagem estática gratuita
-
 ### **Configuração de Ambiente**
 Configure variáveis de ambiente em:
 - `src/environments/environment.ts` (desenvolvimento)
 - `src/environments/environment.prod.ts` (produção)
-
-## 🤝 **Contribuindo**
-
-### **Fluxo de Desenvolvimento**
-1. **Faça fork** do repositório
-2. **Crie** uma branch de funcionalidade
-3. **Escreva testes** seguindo princípios TDD
-4. **Implemente** a funcionalidade
-5. **Certifique-se de que todos os testes passem**
-6. **Envie** um pull request
-
-### **Padrões de Código**
-- Siga o guia de estilo do Angular
-- Use modo estrito do TypeScript
-- Escreva testes abrangentes
-- Use mensagens de commit significativas
-- Siga commits convencionais
-
-## 📈 **Performance**
-
-### **Otimizações**
-- **Carregamento Lazy**: Divisão de código baseada em rotas
-- **Estratégia OnPush**: Detecção de mudanças otimizada
-- **Busca com Debounce**: Redução de chamadas à API
-- **Scroll Virtual**: Renderização eficiente de listas
-- **Tree Shaking**: Tamanho mínimo do bundle
-
-### **Métricas**
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Tamanho do Bundle**: Otimizado para produção
-
-## 🔒 **Segurança**
-
-### **Melhores Práticas**
-- **HTTPS**: Comunicação segura
-- **Validação de Entrada**: Cliente e servidor
-- **Proteção XSS**: Exibição de dados sanitizados
-- **Proteção CSRF**: Validação baseada em token
-- **Política de Segurança de Conteúdo**: Cabeçalhos de segurança aprimorados
-
-## 📚 **Recursos**
-
-### **Documentação**
-- [Documentação do Angular](https://angular.dev)
-- [Angular Material](https://material.angular.io)
-- [Guia RxJS](https://rxjs.dev)
-- [Manual TypeScript](https://www.typescriptlang.org/docs)
-
-### **Aprendizado**
-- [Tutorial do Angular](https://angular.dev/tutorial)
-- [Diretrizes do Material Design](https://material.io)
-- [Princípios TDD](https://www.agilealliance.org/glossary/tdd)
-
-## 📄 **Licença**
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
-
-## 👨‍💻 **Autor**
-
-Construído com ❤️ seguindo os princípios de Desenvolvimento Orientado a Testes e as melhores práticas do Angular.
-
----
-
-**Feliz Programação! 🚀**

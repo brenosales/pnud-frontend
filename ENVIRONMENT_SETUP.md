@@ -1,55 +1,55 @@
-# Environment Configuration Guide
+# Guia de Configuração de Ambiente
 
-This document explains how to configure the User Management System for different environments.
+Este documento explica como configurar o Sistema de Gerenciamento de Usuários para diferentes ambientes.
 
-## Overview
+## Visão Geral
 
-The application uses Angular's environment system to manage configuration for different deployment environments. This eliminates hardcoded values and provides a clean way to manage environment-specific settings.
+A aplicação usa o sistema de ambiente do Angular para gerenciar configurações para diferentes ambientes de deploy. Isso elimina valores hardcoded e fornece uma forma limpa de gerenciar configurações específicas de ambiente.
 
-## Environment Files
+## Arquivos de Ambiente
 
-### Development Environment (`src/environments/environment.ts`)
-- **API URL**: `https://jsonplaceholder.typicode.com` (demo API)
-- **Mock Delay**: 500ms (simulates network latency)
-- **Logging**: Enabled
-- **Cache Timeout**: 5 minutes
+### Ambiente de Desenvolvimento (`src/environments/environment.ts`)
+- **URL da API**: `https://jsonplaceholder.typicode.com` (API de demonstração)
+- **Delay Simulado**: 500ms (simula latência de rede)
+- **Logging**: Habilitado
+- **Timeout do Cache**: 5 minutos
 
-### Production Environment (`src/environments/environment.prod.ts`)
-- **API URL**: `https://api.yourproduction.com` (replace with your actual API)
-- **Mock Delay**: 0ms (no artificial delay)
-- **Logging**: Disabled
-- **Cache Timeout**: 10 minutes
+### Ambiente de Produção (`src/environments/environment.prod.ts`)
+- **URL da API**: `https://api.yourproduction.com` (substitua pela sua API real)
+- **Delay Simulado**: 0ms (sem delay artificial)
+- **Logging**: Desabilitado
+- **Timeout do Cache**: 10 minutos
 
-## Configuration Service
+## Serviço de Configuração
 
-The `ConfigurationService` provides centralized access to all environment settings:
+O `ConfigurationService` fornece acesso centralizado a todas as configurações de ambiente:
 
 ```typescript
 @Injectable()
 export class ConfigurationService {
-  // Get base API URL
+  // Obter URL base da API
   getApiUrl(): string
   
-  // Get full URL for specific endpoint
+  // Obter URL completa para endpoint específico
   getFullApiUrl(endpoint: keyof ApiEndpoints): string
   
-  // Check if running in production
+  // Verificar se está rodando em produção
   isProduction(): boolean
   
-  // Get mock delay for development
+  // Obter delay simulado para desenvolvimento
   getMockDelay(): number
   
-  // Get pagination settings
+  // Obter configurações de paginação
   getPaginationConfig(): PaginationConfig
   
-  // Get search settings
+  // Obter configurações de busca
   getSearchConfig(): SearchConfig
 }
 ```
 
-## Constants
+## Constantes
 
-Application constants are centralized in `src/app/core/constants/app.constants.ts`:
+As constantes da aplicação estão centralizadas em `src/app/core/constants/app.constants.ts`:
 
 ```typescript
 export const APP_CONSTANTS = {
@@ -63,13 +63,13 @@ export const APP_CONSTANTS = {
   VALIDATION: {
     NAME: { MIN_LENGTH: 2, MAX_LENGTH: 50 }
   }
-  // ... more constants
+  // ... mais constantes
 };
 ```
 
-## Usage Examples
+## Exemplos de Uso
 
-### In Services
+### Em Serviços
 ```typescript
 constructor(private configService: ConfigurationService) {
   this.apiUrl = this.configService.getFullApiUrl('users');
@@ -77,7 +77,7 @@ constructor(private configService: ConfigurationService) {
 }
 ```
 
-### In Components
+### Em Componentes
 ```typescript
 constructor(private configService: ConfigurationService) {
   this.pageSize = this.configService.getDefaultPageSize();
@@ -85,24 +85,24 @@ constructor(private configService: ConfigurationService) {
 }
 ```
 
-## Environment-Specific Builds
+## Builds Específicos de Ambiente
 
-### Development Build
+### Build de Desenvolvimento
 ```bash
 ng build
-# Uses src/environments/environment.ts
+# Usa src/environments/environment.ts
 ```
 
-### Production Build
+### Build de Produção
 ```bash
 ng build --configuration production
-# Uses src/environments/environment.prod.ts
+# Usa src/environments/environment.prod.ts
 ```
 
-## Adding New Environments
+## Adicionando Novos Ambientes
 
-1. Create a new environment file (e.g., `environment.staging.ts`)
-2. Add configuration to `angular.json`:
+1. Crie um novo arquivo de ambiente (ex: `environment.staging.ts`)
+2. Adicione a configuração ao `angular.json`:
 ```json
 "staging": {
   "fileReplacements": [
@@ -114,45 +114,4 @@ ng build --configuration production
 }
 ```
 
-3. Build with: `ng build --configuration staging`
-
-## Best Practices
-
-1. **Never hardcode URLs** - Always use the configuration service
-2. **Use constants** - Reference `APP_CONSTANTS` for magic numbers
-3. **Environment-specific settings** - Use environment files for deployment differences
-4. **Type safety** - All configuration is strongly typed
-5. **Centralized management** - Single source of truth for all settings
-
-## Migration from Hardcoded Values
-
-The following hardcoded values have been replaced:
-
-- ❌ `'https://jsonplaceholder.typicode.com/users'`
-- ❌ `500` (mock delay)
-- ❌ `300` (search debounce)
-- ❌ `[5, 10, 25, 50]` (page size options)
-
-With:
-
-- ✅ `configService.getFullApiUrl('users')`
-- ✅ `configService.getMockDelay()`
-- ✅ `configService.getSearchDebounceTime()`
-- ✅ `configService.getPageSizeOptions()`
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Import path errors**: Ensure relative paths are correct from environment files
-2. **Build errors**: Check that environment files are properly configured in `angular.json`
-3. **Runtime errors**: Verify that `ConfigurationService` is properly injected
-
-### Debug Configuration
-
-```typescript
-// Log current configuration
-console.log('Current config:', this.configService.getConfig());
-console.log('Is production:', this.configService.isProduction());
-console.log('API URL:', this.configService.getApiUrl());
-```
+3. Build com: `ng build --configuration staging`

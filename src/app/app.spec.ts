@@ -19,6 +19,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.app-title')?.textContent).toContain('Sistema de Gerenciamento de Usuários');
+    expect(compiled.querySelector('.app-title')?.textContent).toContain('Sistema de Gerenciamento');
   });
 });
