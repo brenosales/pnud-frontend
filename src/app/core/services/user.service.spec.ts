@@ -6,6 +6,7 @@ import { UserService } from './user.service';
 describe('UserService', () => {
   let service: UserService;
   let httpMock: HttpTestingController;
+  const apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
   const mockUsers: User[] = [
     {
@@ -69,7 +70,7 @@ describe('UserService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       expect(req.request.method).toBe('GET');
       req.flush(mockUsers);
     });
@@ -86,7 +87,7 @@ describe('UserService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush(mockUsers);
     });
 
@@ -101,7 +102,7 @@ describe('UserService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
     });
   });
@@ -116,7 +117,7 @@ describe('UserService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users/1');
+      const req = httpMock.expectOne(`${apiUrl}/1`);
       expect(req.request.method).toBe('GET');
       req.flush(mockUser);
     });
@@ -130,7 +131,7 @@ describe('UserService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users/999');
+      const req = httpMock.expectOne(`${apiUrl}/999`);
       req.flush('Not Found', { status: 404, statusText: 'Not Found' });
     });
   });
@@ -206,7 +207,7 @@ describe('UserService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush(mockUsers);
     });
 
@@ -227,7 +228,7 @@ describe('UserService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush(mockUsers);
     });
   });
@@ -240,7 +241,7 @@ describe('UserService', () => {
         error: () => {}
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
 
       // Clear the error
@@ -266,7 +267,7 @@ describe('UserService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush(mockUsers);
     });
   });

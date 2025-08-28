@@ -35,7 +35,6 @@ describe('UserListComponent', () => {
     component = fixture.componentInstance;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     
-    // Prevent the component from trying to load users during initialization
     spyOn(component, 'loadUsers');
     
     fixture.detectChanges();

@@ -7,6 +7,8 @@ describe('UserApiService', () => {
   let service: UserApiService;
   let httpMock: HttpTestingController;
 
+  const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+
   const mockApiUsers = [
     {
       id: 1,
@@ -72,7 +74,7 @@ describe('UserApiService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       expect(req.request.method).toBe('GET');
       req.flush(mockApiUsers);
     });
@@ -86,7 +88,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
     });
 
@@ -99,7 +101,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.error(new ErrorEvent('Network error'));
     });
   });
@@ -116,7 +118,7 @@ describe('UserApiService', () => {
         error: done.fail
       });
 
-      const req = httpMock.expectOne(`https://jsonplaceholder.typicode.com/users/${userId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${userId}`);
       expect(req.request.method).toBe('GET');
       req.flush(mockApiUsers[0]);
     });
@@ -132,7 +134,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne(`https://jsonplaceholder.typicode.com/users/${userId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${userId}`);
       req.flush('Not Found', { status: 404, statusText: 'Not Found' });
     });
 
@@ -147,7 +149,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne(`https://jsonplaceholder.typicode.com/users/${userId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${userId}`);
       req.flush('Bad Request', { status: 400, statusText: 'Bad Request' });
     });
   });
@@ -289,7 +291,7 @@ describe('UserApiService', () => {
 
   describe('API URL configuration', () => {
     it('should use correct API base URL', () => {
-      const expectedUrl = 'https://jsonplaceholder.typicode.com/users';
+      const expectedUrl = apiUrl;
       
       service.fetchUsers().subscribe();
       
@@ -300,7 +302,7 @@ describe('UserApiService', () => {
 
     it('should construct correct URL for individual user', () => {
       const userId = 123;
-      const expectedUrl = `https://jsonplaceholder.typicode.com/users/${userId}`;
+      const expectedUrl = `${apiUrl}/${userId}`;
       
       service.fetchUserById(userId).subscribe();
       
@@ -320,7 +322,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.error(new ErrorEvent('Client error'));
     });
 
@@ -333,7 +335,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
     });
 
@@ -346,7 +348,7 @@ describe('UserApiService', () => {
         }
       });
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/users');
+      const req = httpMock.expectOne(apiUrl);
       req.flush('Unknown Error', { status: 0, statusText: 'Unknown Error' });
     });
   });

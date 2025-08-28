@@ -5,9 +5,7 @@ import { User, UserFilters, UserListResponse } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserBusinessService {
-  /**
-   * Map API users to our User interface
-   */
+  
   mapApiUsersToUsers(apiUsers: any[]): User[] {
     return apiUsers.map(apiUser => ({
       id: apiUser.id,
@@ -34,33 +32,29 @@ export class UserBusinessService {
     }));
   }
 
-  /**
-   * Generate status for demo purposes
-   */
+  
   generateStatus(userId: number): 'active' | 'inactive' {
-    // Use userId to ensure same user always has same status
+    
     return userId % 2 === 0 ? 'active' : 'inactive';
   }
 
-  /**
-   * Apply filters to users
-   */
+  
   applyFilters(users: User[], filters: UserFilters): User[] {
     let filteredUsers = [...users];
 
-    // Filter by name
+    
     if (filters.name) {
       filteredUsers = filteredUsers.filter(user =>
         user.name.toLowerCase().includes(filters.name!.toLowerCase())
       );
     }
 
-    // Filter by status
+    
     if (filters.status) {
       filteredUsers = filteredUsers.filter(user => user.status === filters.status);
     }
 
-    // Sort users
+    
     if (filters.sortBy) {
       filteredUsers.sort((a, b) => {
         const aValue = a[filters.sortBy! as keyof User];
@@ -78,9 +72,7 @@ export class UserBusinessService {
     return filteredUsers;
   }
 
-  /**
-   * Create paginated response
-   */
+  
   createPaginatedResponse(users: User[], filters: UserFilters): UserListResponse {
     const page = filters.page || 1;
     const limit = filters.limit || 10;
@@ -96,9 +88,7 @@ export class UserBusinessService {
     };
   }
 
-  /**
-   * Search users by name or email
-   */
+  
   searchUsers(users: User[], query: string): User[] {
     if (!query.trim()) {
       return users;
@@ -110,9 +100,7 @@ export class UserBusinessService {
     );
   }
 
-  /**
-   * Validate user data
-   */
+  
   validateUser(user: User): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
 
@@ -134,9 +122,7 @@ export class UserBusinessService {
     };
   }
 
-  /**
-   * Check if email is valid
-   */
+  
   private isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);

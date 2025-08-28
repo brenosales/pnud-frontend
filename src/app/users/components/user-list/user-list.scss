@@ -54,9 +54,8 @@
       }
       
       button {
-        height: 56px; // Match form field height
+        height: 56px;
         
-        // Move clear button 18px up
         &[matTooltip="Limpar filtros"] {
           margin-top: -18px;
         }

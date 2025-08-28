@@ -90,16 +90,16 @@ describe('UserBusinessService', () => {
       
       expect(result).toHaveSize(2);
       expect(result[0].id).toBe(1);
-      expect(result[0].name).toBe('johndoe'); // Uses username when name is not available
-      expect(result[0].status).toBe('inactive'); // ID 1 (odd) = inactive
+      expect(result[0].name).toBe('johndoe'); 
+      expect(result[0].status).toBe('inactive'); 
       expect(result[0].phone).toBe('123-456-7890');
       expect(result[0].website).toBe('johndoe.com');
       expect(result[0].company).toBeDefined();
       expect(result[0].address).toBeDefined();
       
       expect(result[1].id).toBe(2);
-      expect(result[1].name).toBe('Jane Smith'); // Uses name when available
-      expect(result[1].status).toBe('active'); // ID 2 (even) = active
+      expect(result[1].name).toBe('Jane Smith'); 
+      expect(result[1].status).toBe('active'); 
       expect(result[1].company).toBeUndefined();
       expect(result[1].address).toBeUndefined();
     });

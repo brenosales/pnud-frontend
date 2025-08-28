@@ -18,29 +18,19 @@ export class UserApiService {
     this.API_URL = this.configService.getFullApiUrl('users');
   }
 
-  /**
-   * Fetch all users from the API
-   */
   fetchUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.API_URL).pipe(
       catchError(error => this.handleHttpError(error))
     );
   }
 
-  /**
-   * Fetch a single user by ID
-   */
   fetchUserById(id: number): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/${id}`).pipe(
       catchError(error => this.handleHttpError(error))
     );
   }
 
-  /**
-   * Create a new user (simulated)
-   */
   createUser(userData: UserFormData): Observable<User> {
-    // Simulate API call - in real app this would be POST request
     const newUser: User = {
       id: this.generateTemporaryId(),
       ...userData,
@@ -59,10 +49,9 @@ export class UserApiService {
   }
 
   /**
-   * Update an existing user (simulated)
+   * Simulated PUT request
    */
   updateUser(id: number, userData: UserFormData): Observable<User> {
-    // Simulate API call - in real app this would be PUT request
     const updatedUser: User = {
       id,
       ...userData,
@@ -81,10 +70,9 @@ export class UserApiService {
   }
 
   /**
-   * Delete a user (simulated)
+   * Simulated DELETE request
    */
   deleteUser(id: number): Observable<boolean> {
-    // Simulate API call - in real app this would be DELETE request
     return new Observable(observer => {
       setTimeout(() => {
         observer.next(true);
@@ -93,27 +81,21 @@ export class UserApiService {
     });
   }
 
-  /**
-   * Handle HTTP errors
-   */
   private handleHttpError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred while processing your request.';
     
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
+      
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Server-side error
+     
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     
     return throwError(() => new Error(errorMessage));
   }
 
-  /**
-   * Generate a temporary ID for new users
-   */
   private generateTemporaryId(): number {
-    return Date.now(); // Simple temporary ID generation
+    return Date.now(); 
   }
 }

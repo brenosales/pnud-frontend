@@ -108,24 +108,18 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /**
-   * Setup search functionality with debouncing
-   */
   private setupSearch(): void {
     this.searchControl.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        debounceTime(this.configService.getSearchDebounceTime()), // Wait for configured debounce time
-        distinctUntilChanged() // Only emit if value changed
+        debounceTime(this.configService.getSearchDebounceTime()),
+        distinctUntilChanged()
       )
       .subscribe(() => {
         this.loadUsers();
       });
   }
 
-  /**
-   * Setup status filter
-   */
   private setupFilters(): void {
     this.statusFilterControl.valueChanges
       .pipe(takeUntil(this.destroy$))
@@ -134,9 +128,6 @@ export class UserListComponent implements OnInit, OnDestroy {
       });
   }
 
-  /**
-   * Load users with current filters
-   */
   loadUsers(): void {
     this.loading = true;
     this.error = null;
@@ -150,18 +141,14 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     this.userService.getUsers(filters).subscribe({
       next: (response: any) => {
-        // Load all users and let Angular Material handle pagination
         this.dataSource.data = response.users;
         this.totalItems = response.users.length;
         
-        // Ensure paginator is connected after data loads
         if (this.paginator && this.dataSource.paginator !== this.paginator) {
           this.dataSource.paginator = this.paginator;
         }
         
-        // Ensure paginator is properly initialized with the data
         if (this.paginator) {
-          // Reset to first page and ensure proper display
           this.paginator.pageIndex = 0;
         }
         
@@ -181,28 +168,19 @@ export class UserListComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Navigate to user detail
-   */
   viewUser(user: User): void {
     this.router.navigate(['/users', user.id]);
   }
 
-  /**
-   * Navigate to edit user
-   */
   editUser(user: User): void {
     this.router.navigate(['/users', user.id, 'edit']);
   }
 
-  /**
-   * Delete user with confirmation
-   */
   deleteUser(user: User): void {
     if (confirm(`Tem certeza de que deseja excluir ${user.name}?`)) {
       this.userService.deleteUser(user.id).subscribe({
         next: () => {
-          this.loadUsers(); // Reload the list
+          this.loadUsers();
         },
         error: (error: any) => {
           this.error = error.message;
@@ -211,51 +189,27 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Navigate to create new user
-   */
   createUser(): void {
     this.router.navigate(['/users/new']);
   }
 
-  /**
-   * Handle page change (no need to reload data with client-side pagination)
-   */
   onPageChange(): void {
-    // Ensure paginator is connected to data source
     if (this.paginator && this.dataSource.paginator !== this.paginator) {
       this.dataSource.paginator = this.paginator;
     }
-    
-    console.log('Page changed to:', this.paginator?.pageIndex);
-    console.log('Page size:', this.paginator?.pageSize);
-    console.log('Total items:', this.totalItems);
-    console.log('Data source length:', this.dataSource.data.length);
-    
-    // Angular Material handles pagination automatically
   }
 
-  /**
-   * Handle page size change
-   */
   onPageSizeChange(): void {
     if (this.paginator) {
       this.pageSize = this.paginator.pageSize;
       this.paginator.pageIndex = 0;
     }
-    // No need to reload data - Angular Material handles pagination
   }
 
-  /**
-   * Handle sort change
-   */
   onSortChange(): void {
     this.loadUsers();
   }
 
-  /**
-   * Clear all filters
-   */
   clearFilters(): void {
     this.searchControl.setValue('');
     this.statusFilterControl.setValue('');

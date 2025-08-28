@@ -22,9 +22,7 @@ export class UserService {
     this.mockDelay = this.configService.getMockDelay();
   }
 
-  /**
-   * Get all users with optional filtering
-   */
+  
   getUsers(filters: UserFilters = {}): Observable<UserListResponse> {
     this.stateService.setLoading(true);
     this.stateService.clearError();
@@ -44,9 +42,6 @@ export class UserService {
     );
   }
 
-  /**
-   * Get a single user by ID
-   */
   getUserById(id: number): Observable<User> {
     this.stateService.setLoading(true);
     this.stateService.clearError();
@@ -63,9 +58,6 @@ export class UserService {
     );
   }
 
-  /**
-   * Create a new user
-   */
   createUser(userData: UserFormData): Observable<User> {
     this.stateService.setLoading(true);
     this.stateService.clearError();
@@ -79,9 +71,6 @@ export class UserService {
     );
   }
 
-  /**
-   * Update an existing user
-   */
   updateUser(id: number, userData: UserFormData): Observable<User> {
     this.stateService.setLoading(true);
     this.stateService.clearError();
@@ -95,9 +84,7 @@ export class UserService {
     );
   }
 
-  /**
-   * Delete a user
-   */
+  
   deleteUser(id: number): Observable<boolean> {
     this.stateService.setLoading(true);
     this.stateService.clearError();
@@ -111,9 +98,6 @@ export class UserService {
     );
   }
 
-  /**
-   * Search users by name or email
-   */
   searchUsers(query: string): Observable<User[]> {
     const currentUsers = this.stateService.currentUsers;
     const searchResults = this.businessService.searchUsers(currentUsers, query);
@@ -124,16 +108,10 @@ export class UserService {
     });
   }
 
-  /**
-   * Clear error state
-   */
   clearError(): void {
     this.stateService.clearError();
   }
 
-  /**
-   * Get current state observables
-   */
   get users$() {
     return this.stateService.users$;
   }
@@ -150,9 +128,6 @@ export class UserService {
     return this.stateService.filters$;
   }
 
-  /**
-   * Get current state values
-   */
   get currentUsers() {
     return this.stateService.currentUsers;
   }

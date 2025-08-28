@@ -77,16 +77,13 @@ describe('HighlightDirective', () => {
     fixture.detectChanges();
     
     const element = debugElement.nativeElement;
-    // Should not crash and should handle special characters
     expect(element.innerHTML).toBeDefined();
   });
 
   it('should restore original content when search term is cleared', () => {
-    // First set a search term
     component.searchTerm = 'Test';
     fixture.detectChanges();
     
-    // Then clear it
     component.searchTerm = '';
     fixture.detectChanges();
     
