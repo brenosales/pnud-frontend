@@ -60,7 +60,7 @@ Aplicação Angular moderna e responsiva para gerenciar usuários com operaçõe
 1. **Clone o repositório**
    ```bash
    git clone <repository-url>
-   cd user-management-system
+   cd pnud-frontend
    ```
 
 2. **Instale as dependências**
